@@ -1,0 +1,5 @@
+Red Rocks Peak|1900
+Pioneer Point|245
+Lavish Ladder Mountain|5000
+Crazy Cavern|9000
+

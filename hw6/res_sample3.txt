@@ -1,0 +1,8 @@
+Panda Express~10~5~5
+Five Guys~4~3~5
+Panera Bread~1~1~1
+Taco Johns~8~3~1~9
+GTO Tacos~10~4~5
+Pork Chop Johns~1~1~5
+Hangin 5~5~5~5~5~5
+
