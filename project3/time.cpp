@@ -11,24 +11,24 @@ using namespace std;
 
 Time :: Time()
 {
-    time = 12;
+    timetime = 12;
     time_counter = 0;
 }
 
 Time :: Time(int new_time)
 {
-    time = new_time;
+    timetime = new_time;
     time_counter = 0;
 }
 
 int Time :: getTime()
 {
-    return time;
+    return timetime;
 }
 
 void Time :: setTime(int new_time)
 {
-    time = new_time;
+    timetime = new_time;
 }
 
 int Time :: getTimeCount()
@@ -41,7 +41,9 @@ void Time :: setTimeCount(int count)
     time_counter = count;
 }
 
-int Time :: randTime()
+void Time :: randTime()
 {
-    
+    srand(time(0));
+
+    timetime = rand() % (10) + 12;
 }

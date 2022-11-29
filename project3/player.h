@@ -19,6 +19,7 @@ class Player
         int moves_made;
         int remnants_collected;
         bool key_found;
+        bool escaped;
 
 
     public: 
@@ -31,4 +32,5 @@ class Player
         void setRemnants(int blob);
         bool getKeyFound();
         void setFoundKey(bool is_found);
+        bool isEscaped();
 };

@@ -9,13 +9,13 @@ using namespace std;
 class Time
 {
     private: 
-        int time;
+        int timetime;
         int time_counter;
 
     public:
         Time();
         Time(int new_time);
-        int randTime();
+        void randTime();
         int getTime();
         void setTime(int new_time);
         int getTimeCount();

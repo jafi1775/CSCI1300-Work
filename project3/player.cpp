@@ -15,6 +15,7 @@ Player :: Player()
     int moves_made = 0;
     int remnants_collected = 0;
     bool key_found = false;
+    bool escaped = false;
 
 }
 
@@ -56,4 +57,9 @@ bool Player :: getKeyFound()
 void Player :: setFoundKey(bool is_found)
 {
     key_found = is_found;
+}
+
+bool Player :: isEscaped()
+{
+    return escaped;
 }

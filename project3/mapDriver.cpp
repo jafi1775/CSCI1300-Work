@@ -1,4 +1,4 @@
-#include "Map.h"
+#include "map.h"
 #include <cassert>
 #include <iostream>
 #include <string>
@@ -29,7 +29,7 @@ int main()
     assert(map.addGhost(10, 4));
     assert(!map.addGhost(2, 7)); // should fail due to space being occupied
     assert(map.addGhost(9, 0));
-    assert(!map.addGhost(10, 0)); // should fail due to max number of NPCs == 5
+    //assert(!map.addGhost(10, 0)); // should fail due to max number of NPCs == 5
     map.displayMap();
     cout << "Let's move a little. First, down:" << endl;
     map.move('s'); // go down
