@@ -45,5 +45,5 @@ void Time :: randTime()
 {
     srand(time(0));
 
-    timetime = rand() % (10) + 12;
+    timetime = 24 - (rand() % (10) + 12);
 }

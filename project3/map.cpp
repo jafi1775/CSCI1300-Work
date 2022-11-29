@@ -25,12 +25,12 @@ Map::Map()
 void Map::resetMap()
 {
     // resets player position, count values, and initializes values in position arrays to -1
-    player_position_[0] = 0;
-    player_position_[1] = 0;
+    player_position_[0] = 6;
+    player_position_[1] = 12;
 
     // set dungeon exit
-    house_escape[0] = num_rows_ - 1;
-    house_escape[1] = num_cols_ / 2;
+    house_escape[0] = 1;
+    house_escape[1] = 12;
 
     for (int i = 0; i < max_ghosts; i++)
     {
