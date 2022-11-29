@@ -170,11 +170,13 @@ void statusUpdate(Time game_time, Player player)
 */
 void play(Time game_time)
 {
-    Player player;
-    int start = 0;
-    char input;
+    Player player; // player class
+    int start = 0; // initial value to enter if statement
+    char input; // to take input from player
 
-    Map map;
+    //cout << player.getGhostsSaved() << endl;
+
+    Map map; // map class 
     //map.displayMap();
 
     assert(map.addGhost(0,0)); // ghosts 
@@ -185,7 +187,7 @@ void play(Time game_time)
 
     assert(map.addItem(7,0)); // flashlight
 
-    assert(map.addItem(8,7)); // non interactive features 
+    assert(map.addItem(8,7)); // non interactive features or items
     assert(map.addItem(11,9)); 
     assert(map.addItem(0,8));
     assert(map.addItem(1,5));
@@ -194,35 +196,35 @@ void play(Time game_time)
 
     do
     {
-        if(start == 0)
+        if(start == 0) // first thing that runs 
         {
-            limitedMenuPrint(4); // can't move backwards
-            start ++;
+            limitedMenuPrint(4); // menu that is displayed when player can't move backwards
+            start ++; // so you can't enter the if statement again
             cin >> input;
             
-            if (input == 'w' || input == 's' || input == 'a' || input == 'd')
+            if (input == 'w' || input == 's' || input == 'a' || input == 'd') // checks if the input is a movement 
             {
                 map.move(input);
-                if (input == 'w')
+                if (input == 'w') // if the player is moving forward increase the time by one hour 
                 {
                     game_time.setTimeCount();
                 }                
                 
                 map.displayMap(); // to check work
             }
-            else if (input == 'z')
+            else if (input == 'z') // if the player wants to check stats
             {
                 statusUpdate(game_time, player);
             }
             else 
             {
-                while (input != 'w' || input != 'd' || input != 's' || input != 'a' )
+                while (input != 'w' && input != 'd' && input != 's' && input != 'a' ) 
                 {
                     cout << "Please make a valid selection." << endl;
                     cin >> input;
                 }
             }
-            continue;
+            
         }
 
         if (!player.isFlashlightFound())
@@ -251,50 +253,61 @@ void play(Time game_time)
             {
                 menuPrint();
             }
+            
+            cout << endl;
 
             cin >> input; 
 
             
-                while (input != 'w' || input != 'd' || input != 's' || input != 'a' )
-                {
-                    cout << "Please make a valid selection." << endl;
-                    cin >> input;
-                }
-
-            map.displayMap();
-        }
-
-        if (player.isFlashlightFound())
-        {
-            if (map.getPlayerRow() == 0)
+            while (input != 'w' || input != 'd' || input != 's' || input != 'a')
             {
-                limitedMenuPrintNew(1); 
+                cout << "Please make a valid selection." << endl;
+                cin >> input;
             }
             
-            if (map.getPlayerRow() == 11)
-            {
-                limitedMenuPrintNew(4);
-            }
+            map.move(input);
 
-            if (map.getPlayerCol() == 0)
+            if (input == 'w' || input == 's')
             {
-                limitedMenuPrintNew(3);
-            }
-
-            if (map.getPlayerCol() == 11)
-            {
-                limitedMenuPrintNew(2);
-            }
-
-            else
-            {
-                menuPrintNew();
-            }
+                game_time.setTimeCount();
+            }  
 
             map.displayMap();
-
-            cin >> input;
         }
+
+        // if (player.isFlashlightFound())
+        // {
+        //     if (map.getPlayerRow() == 0)
+        //     {
+        //         limitedMenuPrintNew(1); 
+        //     }
+            
+        //     if (map.getPlayerRow() == 11)
+        //     {
+        //         limitedMenuPrintNew(4);
+        //     }
+
+        //     if (map.getPlayerCol() == 0)
+        //     {
+        //         limitedMenuPrintNew(3);
+        //     }
+
+        //     if (map.getPlayerCol() == 11)
+        //     {
+        //         limitedMenuPrintNew(2);
+        //     }
+
+        //     else
+        //     {
+        //         menuPrintNew();
+        //     }
+
+        //     map.displayMap();
+
+        //     cout << endl;
+
+        //     cin >> input;
+        // }
 
         
 

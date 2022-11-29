@@ -10,7 +10,7 @@ using namespace std;
 
 Player :: Player()
 {
-    int num_items = 0;
+    int num_items = 5;
     int ghosts_saved = 0;
     int moves_made = 0;
     int remnants_collected = 0;
@@ -92,3 +92,8 @@ void Player :: setFlashlightFound(bool is_found)
 {
     flashlight_found = is_found;
 }
+
+ void Player :: setEscaped(bool is_escaped)
+ {
+    escaped = is_escaped;
+ }

@@ -33,6 +33,7 @@ class Player
         void setRemnants(int blob);
         bool getKeyFound();
         void setFoundKey(bool is_found);
+        void setEscaped(bool is_escaped);
         bool isEscaped();
         void addGhostsSaved();
         int getGhostsSaved();
