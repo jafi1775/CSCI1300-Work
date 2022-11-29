@@ -16,7 +16,7 @@ Player :: Player()
     int remnants_collected = 0;
     bool key_found = false;
     bool escaped = false;
-
+    bool flashlight_found = false;
 }
 
 void Player :: printMyItems()
@@ -81,4 +81,14 @@ void Player :: addGhostsSaved()
 int Player :: getGhostsSaved()
 {
     return ghosts_saved;
+}
+
+bool Player :: isFlashlightFound()
+{
+    return flashlight_found;
+}
+
+void Player :: setFlashlightFound(bool is_found)
+{
+    flashlight_found = is_found;
 }

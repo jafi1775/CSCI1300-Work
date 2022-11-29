@@ -5,7 +5,6 @@
 
 
 #include <iostream>
-#include <vector>
 #include "Items.h"
 using namespace std;
 
@@ -20,6 +19,7 @@ class Player
         int remnants_collected;
         bool key_found;
         bool escaped;
+        bool flashlight_found;
 
 
     public: 
@@ -36,4 +36,6 @@ class Player
         bool isEscaped();
         void addGhostsSaved();
         int getGhostsSaved();
+        bool isFlashlightFound();
+        void setFlashlightFound(bool is_found);
 };

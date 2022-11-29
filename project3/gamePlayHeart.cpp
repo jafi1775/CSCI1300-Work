@@ -149,16 +149,25 @@ void limitedMenuPrintNew(int limit)
     return;
 }
 
+/*  Algorithm for statusUpdate function- 
 
+    This function prints out how many hours have passed in the game, how many 
+    ghosts you've saved, and the items you've collected so far.
+*/
 void statusUpdate(Time game_time, Player player)
 {
 
     cout << game_time.getTimeCount() << " hours have passed." << endl;
     cout << "You've saved " << player.getGhostsSaved() << " ghosts." << endl;
-    cout << "You have: " << player.printMyItems() << endl;
+    cout << "You have: " ;
+    player.printMyItems(); 
+    cout << endl;
 }
 
+/*  Algorithm for play function- 
 
+    This function is what is used 
+*/
 void play(Time game_time)
 {
     Player player;
@@ -191,7 +200,7 @@ void play(Time game_time)
             start ++;
             cin >> input;
             
-            if (input != 'z')
+            if (input == 'w' || input == 's' || input == 'a' || input == 'd')
             {
                 map.move(input);
                 if (input == 'w')
@@ -201,16 +210,110 @@ void play(Time game_time)
                 
                 map.displayMap(); // to check work
             }
-            else 
+            else if (input == 'z')
             {
                 statusUpdate(game_time, player);
             }
+            else 
+            {
+                while (input != 'w' || input != 'd' || input != 's' || input != 'a' )
+                {
+                    cout << "Please make a valid selection." << endl;
+                    cin >> input;
+                }
+            }
+            continue;
         }
+
+        if (!player.isFlashlightFound())
+        {
+            if (map.getPlayerRow() == 0)
+            {
+                limitedMenuPrint(1); 
+            }
+            
+            if (map.getPlayerRow() == 11)
+            {
+                limitedMenuPrint(4);
+            }
+
+            if (map.getPlayerCol() == 0)
+            {
+                limitedMenuPrint(3);
+            }
+
+            if (map.getPlayerCol() == 11)
+            {
+                limitedMenuPrint(2);
+            }
+
+            else
+            {
+                menuPrint();
+            }
+
+            cin >> input; 
+
+            
+                while (input != 'w' || input != 'd' || input != 's' || input != 'a' )
+                {
+                    cout << "Please make a valid selection." << endl;
+                    cin >> input;
+                }
+
+            map.displayMap();
+        }
+
+        if (player.isFlashlightFound())
+        {
+            if (map.getPlayerRow() == 0)
+            {
+                limitedMenuPrintNew(1); 
+            }
+            
+            if (map.getPlayerRow() == 11)
+            {
+                limitedMenuPrintNew(4);
+            }
+
+            if (map.getPlayerCol() == 0)
+            {
+                limitedMenuPrintNew(3);
+            }
+
+            if (map.getPlayerCol() == 11)
+            {
+                limitedMenuPrintNew(2);
+            }
+
+            else
+            {
+                menuPrintNew();
+            }
+
+            map.displayMap();
+
+            cin >> input;
+        }
+
+        
 
 
         
 
-    } while (!player.isEscaped());
+    } while (!player.isEscaped() && game_time.getTime() != 24);
+
+
+    if (game_time.getTime() == 24) // if the time runs out and the player lost the game
+    {
+        cout << endl;
+        cout << "You hear a clock strike 12 times. The deep ominous voice returns, " << endl;
+        cout << "growling with a resonance that shakes the walls of the old rickety house." << endl;
+        cout << "\"Well well well, seems like I have a new soul to torture. Didn't make it out in time" << endl;
+        cout << "huh? Well better luck in your next life ... if you ever escape. \" " << endl << endl;;
+
+        cout << "GAME OVER" << endl;
+    }
 
 
     
