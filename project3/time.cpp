@@ -36,9 +36,9 @@ int Time :: getTimeCount()
     return time_counter;
 }
 
-void Time :: setTimeCount(int count)
+void Time :: setTimeCount()
 {
-    time_counter = count;
+    time_counter ++;
 }
 
 void Time :: randTime()

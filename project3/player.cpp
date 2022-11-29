@@ -19,6 +19,15 @@ Player :: Player()
 
 }
 
+void Player :: printMyItems()
+{
+    for (int i = 0; i < 5; i++)
+    {
+        cout << my_items[i] << ", "; 
+    }
+    return;
+}
+
 int Player :: getNumItems()
 {
     return num_items;
@@ -62,4 +71,14 @@ void Player :: setFoundKey(bool is_found)
 bool Player :: isEscaped()
 {
     return escaped;
+}
+
+void Player :: addGhostsSaved()
+{
+    ghosts_saved++;
+}
+
+int Player :: getGhostsSaved()
+{
+    return ghosts_saved;
 }

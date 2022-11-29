@@ -22,7 +22,7 @@ void menuPrint()
     cout << "d - Right" << endl << endl;
     //cout << "f - Use Flashlight" <<endl;
 
-    cout << "1 - Stats" << endl;
+    cout << "z - Stats" << endl;
 
     return;
 }
@@ -36,7 +36,7 @@ void menuPrintNew()
     cout << "d - Right" << endl;
     cout << "p - Use Flashlight" <<endl << endl;
 
-    cout << "1 - Stats" << endl;
+    cout << "z - Stats" << endl;
 
     return;
 
@@ -60,7 +60,7 @@ void limitedMenuPrint(int limit)
         cout << "s - Back" << endl;
         cout << "d - Right" << endl << endl;
 
-        cout << "1 - Stats" << endl;
+        cout << "z - Stats" << endl;
     }
 
     else if (limit == 2) // no right
@@ -70,7 +70,7 @@ void limitedMenuPrint(int limit)
         cout << "s - Back" << endl << endl;
         //cout << "f - Use Flashlight" <<endl;
 
-        cout << "1 - Stats" << endl;
+        cout << "z - Stats" << endl;
     }
 
     else if (limit == 3) // no left
@@ -80,7 +80,7 @@ void limitedMenuPrint(int limit)
         cout << "d - Right" << endl << endl;
         //cout << "f - Use Flashlight" <<endl;
 
-        cout << "1 - Stats" << endl;
+        cout << "z - Stats" << endl;
 
     }
     else if (limit == 4) // no back
@@ -90,7 +90,7 @@ void limitedMenuPrint(int limit)
         cout << "d - Right" << endl << endl;
         //cout << "f - Use Flashlight" <<endl;
 
-        cout << "1 - Stats" << endl;
+        cout << "z - Stats" << endl;
 
     }
     return;
@@ -113,7 +113,7 @@ void limitedMenuPrintNew(int limit)
         cout << "d - Right" << endl;
         cout << "p - Use Flashlight" <<endl << endl;
 
-        cout << "1 - Stats" << endl;
+        cout << "z - Stats" << endl;
     }
 
     else if (limit == 2) // no right
@@ -123,7 +123,7 @@ void limitedMenuPrintNew(int limit)
         cout << "s - Back" << endl;
         cout << "p - Use Flashlight"  << endl << endl;
 
-        cout << "1 - Stats" << endl;
+        cout << "z - Stats" << endl;
     }
 
     else if (limit == 3) // no left
@@ -133,7 +133,7 @@ void limitedMenuPrintNew(int limit)
         cout << "d - Right" << endl;
         cout << "p - Use Flashlight" << endl << endl;
 
-        cout << "1 - Stats" << endl;
+        cout << "z - Stats" << endl;
 
     }
     else if (limit == 4) // no back
@@ -143,30 +143,76 @@ void limitedMenuPrintNew(int limit)
         cout << "d - Right" << endl;
         cout << "p - Use Flashlight" << endl << endl;
 
-        cout << "1 - Stats" << endl;
+        cout << "z - Stats" << endl;
 
     }
     return;
 }
 
 
+void statusUpdate(Time game_time, Player player)
+{
+
+    cout << game_time.getTimeCount() << " hours have passed." << endl;
+    cout << "You've saved " << player.getGhostsSaved() << " ghosts." << endl;
+    cout << "You have: " << player.printMyItems() << endl;
+}
 
 
 void play(Time game_time)
 {
     Player player;
     int start = 0;
+    char input;
 
     Map map;
+    //map.displayMap();
+
+    assert(map.addGhost(0,0)); // ghosts 
+    assert(map.addGhost(3,3));
+    assert(map.addGhost(5,5));
+    assert(map.addGhost(6,9));
+    assert(map.addGhost(8,3));
+
+    assert(map.addItem(7,0)); // flashlight
+
+    assert(map.addItem(8,7)); // non interactive features 
+    assert(map.addItem(11,9)); 
+    assert(map.addItem(0,8));
+    assert(map.addItem(1,5));
+    assert(map.addItem(6,2));
+    assert(map.addItem(3,8));
 
     do
     {
         if(start == 0)
         {
-            limitedMenuPrint(4);
+            limitedMenuPrint(4); // can't move backwards
+            start ++;
+            cin >> input;
+            
+            if (input != 'z')
+            {
+                map.move(input);
+                if (input == 'w')
+                {
+                    game_time.setTimeCount();
+                }                
+                
+                map.displayMap(); // to check work
+            }
+            else 
+            {
+                statusUpdate(game_time, player);
+            }
         }
 
+
+        
+
     } while (!player.isEscaped());
+
+
     
 
     return;
@@ -177,11 +223,10 @@ void play(Time game_time)
 
 int main()
 {
-    Map map;
+    Time game_time;
 
-    assert(map.addGhost(0,1));
-
-    map.displayMap();
+    play(game_time);
+    
 
 
     return 0;

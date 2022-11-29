@@ -19,5 +19,5 @@ class Time
         int getTime();
         void setTime(int new_time);
         int getTimeCount();
-        void setTimeCount(int count);
+        void setTimeCount();
 };

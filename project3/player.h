@@ -13,7 +13,7 @@ class Player
 {
 
     private:
-        vector <Items> my_items;
+        string my_items[5];
         int num_items;
         int ghosts_saved;
         int moves_made;
@@ -24,6 +24,7 @@ class Player
 
     public: 
         Player();
+        void printMyItems();
         int getNumItems();
         void setNumItems(int new_item_num);
         int getMoves();
@@ -33,4 +34,6 @@ class Player
         bool getKeyFound();
         void setFoundKey(bool is_found);
         bool isEscaped();
+        void addGhostsSaved();
+        int getGhostsSaved();
 };

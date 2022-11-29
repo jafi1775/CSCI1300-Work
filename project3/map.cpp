@@ -25,12 +25,12 @@ Map::Map()
 void Map::resetMap()
 {
     // resets player position, count values, and initializes values in position arrays to -1
-    player_position_[0] = 6;
-    player_position_[1] = 12;
+    player_position_[0] = 11;
+    player_position_[1] = 6;
 
     // set dungeon exit
     house_escape[0] = 1;
-    house_escape[1] = 12;
+    house_escape[1] = 11;
 
     for (int i = 0; i < max_ghosts; i++)
     {
@@ -425,6 +425,8 @@ bool Map::removeItem(int row, int col)
     }
     return false;
 }
+
+
 
 /*
  * Algorithm: Mark (row, col) as explored, either revealing NPC or empty space
