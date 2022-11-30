@@ -35,6 +35,7 @@ class Player
         void setFoundKey(bool is_found);
         void setEscaped(bool is_escaped);
         bool isEscaped();
+        void setGhostsSaved(int ghosts);
         void addGhostsSaved();
         int getGhostsSaved();
         bool isFlashlightFound();

@@ -93,7 +93,12 @@ void Player :: setFlashlightFound(bool is_found)
     flashlight_found = is_found;
 }
 
- void Player :: setEscaped(bool is_escaped)
- {
+void Player :: setEscaped(bool is_escaped)
+{
     escaped = is_escaped;
- }
+}
+
+void Player :: setGhostsSaved(int ghosts)
+{
+    ghosts_saved = ghosts;
+}

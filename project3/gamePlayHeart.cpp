@@ -160,7 +160,14 @@ void statusUpdate(Time game_time, Player player)
     cout << game_time.getTimeCount() << " hours have passed." << endl;
     cout << "You've saved " << player.getGhostsSaved() << " ghosts." << endl;
     cout << "You have: " ;
-    player.printMyItems(); 
+    if (player.getNumItems() == 0)
+    {
+        cout << "No Items." << endl;
+    }
+    else 
+    {
+        player.printMyItems(); 
+    }
     cout << endl;
 }
 
@@ -169,10 +176,16 @@ void statusUpdate(Time game_time, Player player)
     This function is what is used 
 */
 void play(Time game_time)
-{
+{  
     Player player; // player class
+    Flashlight flashlight;
     int start = 0; // initial value to enter if statement
     char input; // to take input from player
+
+    player.setGhostsSaved(0); // set values for objects in player class
+    player.setNumItems(0);
+    player.setFoundKey(false);
+    player.setEscaped(false);
 
     //cout << player.getGhostsSaved() << endl;
 
@@ -202,7 +215,7 @@ void play(Time game_time)
             start ++; // so you can't enter the if statement again
             cin >> input;
             
-            if (input == 'w' || input == 's' || input == 'a' || input == 'd') // checks if the input is a movement 
+            if (input == 'w' || input == 'a' || input == 'd') // checks if the input is a movement 
             {
                 map.move(input);
                 if (input == 'w') // if the player is moving forward increase the time by one hour 
@@ -211,14 +224,15 @@ void play(Time game_time)
                 }                
                 
                 map.displayMap(); // to check work
+                cout << endl;
             }
             else if (input == 'z') // if the player wants to check stats
             {
                 statusUpdate(game_time, player);
             }
-            else 
+            else // if the input is none of the offered options
             {
-                while (input != 'w' && input != 'd' && input != 's' && input != 'a' ) 
+                while (input != 'w' && input != 's' && input != 'a' ) 
                 {
                     cout << "Please make a valid selection." << endl;
                     cin >> input;
@@ -227,97 +241,149 @@ void play(Time game_time)
             
         }
 
-        if (!player.isFlashlightFound())
+        // check position of player to see if they encountered ghost, item, or non interative feature
+        
+        if (!player.isFlashlightFound()) // if the flashlight has not been found 
         {
-            if (map.getPlayerRow() == 0)
+            if (map.getPlayerRow() == 0) // if you can't move forward
             {
                 limitedMenuPrint(1); 
             }
             
-            if (map.getPlayerRow() == 11)
+            else if (map.getPlayerRow() == 11) // if you can't move backwards
             {
                 limitedMenuPrint(4);
             }
 
-            if (map.getPlayerCol() == 0)
+            else if (map.getPlayerCol() == 0) // if you can't move to the left
             {
                 limitedMenuPrint(3);
             }
 
-            if (map.getPlayerCol() == 11)
+            else if (map.getPlayerCol() == 11) // if you can't move to the right 
             {
                 limitedMenuPrint(2);
             }
 
-            else
+            else // if you can move any direction
             {
                 menuPrint();
             }
             
-            cout << endl;
+            cout << endl; // add space 
 
-            cin >> input; 
+            cin >> input; // take players input from menu
 
             
-            while (input != 'w' || input != 'd' || input != 's' || input != 'a')
+            while (input != 'w' && input != 'd' && input != 's' && input != 'a' && input != 'z')
             {
                 cout << "Please make a valid selection." << endl;
                 cin >> input;
             }
-            
-            map.move(input);
 
-            if (input == 'w' || input == 's')
+            if (input == 'z')
             {
-                game_time.setTimeCount();
-            }  
+                statusUpdate(game_time, player);
+            }
+            else 
+            {
+                //map.move(input);
+                if (!map.move(input))
+                {
+                    cout << "You are unable to move in that direction, choose another option." << endl;
+                    cin >> input; 
+                }
+                
+                if (input == 'w' || input == 's')
+                {
+                    game_time.setTimeCount();
+                }  
 
-            map.displayMap();
+                map.displayMap(); // to check and debug
+                cout << endl;
+            }
         }
 
-        // if (player.isFlashlightFound())
-        // {
-        //     if (map.getPlayerRow() == 0)
-        //     {
-        //         limitedMenuPrintNew(1); 
-        //     }
+
+
+        if (player.isFlashlightFound())
+        {
+            if (map.getPlayerRow() == 0)
+            {
+                limitedMenuPrintNew(1); 
+            }
             
-        //     if (map.getPlayerRow() == 11)
-        //     {
-        //         limitedMenuPrintNew(4);
-        //     }
+            if (map.getPlayerRow() == 11)
+            {
+                limitedMenuPrintNew(4);
+            }
 
-        //     if (map.getPlayerCol() == 0)
-        //     {
-        //         limitedMenuPrintNew(3);
-        //     }
+            if (map.getPlayerCol() == 0)
+            {
+                limitedMenuPrintNew(3);
+            }
 
-        //     if (map.getPlayerCol() == 11)
-        //     {
-        //         limitedMenuPrintNew(2);
-        //     }
+            if (map.getPlayerCol() == 11)
+            {
+                limitedMenuPrintNew(2);
+            }
 
-        //     else
-        //     {
-        //         menuPrintNew();
-        //     }
+            else
+            {
+                menuPrintNew();
+            }
 
-        //     map.displayMap();
+            cout << endl; // add space 
 
-        //     cout << endl;
+            cin >> input; // take players input from menu
 
-        //     cin >> input;
-        // }
+            
+            while (input != 'w' && input != 'd' && input != 's' && input != 'a' && input != 'z' && input != 'p')
+            {
+                cout << "Please make a valid selection." << endl;
+                cin >> input;
+            }
+
+            if (input == 'z')
+            {
+                statusUpdate(game_time, player);
+            }
+
+            // if they use the flashlight 
+            else if (input == 'p')
+            {
+                flashlight.setSpaces(map.getPlayerRow(), map.getPlayerCol());
+
+            }
+
+            else 
+            {
+                //map.move(input);
+                if (!map.move(input))
+                {
+                    cout << "You are unable to move in that direction, choose another option." << endl;
+                    cin >> input; 
+                }
+                
+                if (input == 'w' || input == 's')
+                {
+                    game_time.setTimeCount();
+                }  
+
+                map.displayMap(); // to check and debug
+                cout << endl;
+            }
+        }
 
         
 
 
         
 
-    } while (!player.isEscaped() && game_time.getTime() != 24);
+    } while (!player.isEscaped() && game_time.getTimeCount() < 24);
 
 
-    if (game_time.getTime() == 24) // if the time runs out and the player lost the game
+    if (game_time.getTimeCount() == 24) // if the time runs out and the player lost the game
     {
         cout << endl;
         cout << "You hear a clock strike 12 times. The deep ominous voice returns, " << endl;
@@ -332,18 +398,19 @@ void play(Time game_time)
     
 
     return;
+    
 }
 
 
 
 
-int main()
-{
-    Time game_time;
+// int main()
+// {
+//     Time game_time;
 
-    play(game_time);
+//     play(game_time);
     
 
 
-    return 0;
-}
+//     return 0;
+// }
