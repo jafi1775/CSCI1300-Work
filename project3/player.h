@@ -5,14 +5,15 @@
 
 
 #include <iostream>
-#include "Items.h"
+#include <vector>
+//#include "Items.h"
 using namespace std;
 
 class Player
 {
 
     private:
-        string my_items[5];
+        vector <string> my_items[5];
         int num_items;
         int num_candy;
         int ghosts_saved;

@@ -83,6 +83,7 @@ void limitedMenuPrint(int limit)
         cout << "z - Stats" << endl;
 
     }
+
     else if (limit == 4) // no back
     {
         cout << "w - Forward" << endl;
@@ -93,6 +94,44 @@ void limitedMenuPrint(int limit)
         cout << "z - Stats" << endl;
 
     }
+
+    else if (limit == 5) // no forward or right
+    {
+        cout << "a - Left" << endl;
+        cout << "s - Back" << endl << endl;
+        //cout << "f - Use Flashlight" <<endl;
+
+        cout << "z - Stats" << endl;
+    }
+
+    else if (limit == 6) // no forward or left
+    {
+        cout << "s - Back" << endl;
+        cout << "d - Right" << endl << endl;
+        //cout << "f - Use Flashlight" <<endl;
+
+        cout << "z - Stats" << endl;
+    }
+
+    else if (limit == 7) // no back or right
+    {
+        cout << "w - Forward" << endl;
+        cout << "a - Left" << endl;
+        //cout << "f - Use Flashlight" <<endl;
+
+        cout << "z - Stats" << endl;
+
+    }
+
+    else if (limit == 8) // no back or left 
+    {
+        cout << "w - Forward" << endl;
+        cout << "d - Right" << endl << endl;
+        //cout << "f - Use Flashlight" <<endl;
+
+        cout << "z - Stats" << endl;
+    }
+
     return;
 }
 
@@ -146,6 +185,44 @@ void limitedMenuPrintNew(int limit)
         cout << "z - Stats" << endl;
 
     }
+
+    else if (limit == 5) // no forward or right
+    {
+        cout << "a - Left" << endl;
+        cout << "s - Back" << endl << endl;
+        cout << "f - Use Flashlight" <<endl;
+
+        cout << "z - Stats" << endl;
+    }
+
+    else if (limit == 6) // no forward or left
+    {
+        cout << "s - Back" << endl;
+        cout << "d - Right" << endl << endl;
+        cout << "f - Use Flashlight" <<endl;
+
+        cout << "z - Stats" << endl;
+    }
+
+    else if (limit == 7) // no back or right
+    {
+        cout << "w - Forward" << endl;
+        cout << "a - Left" << endl;
+        cout << "f - Use Flashlight" <<endl;
+
+        cout << "z - Stats" << endl;
+
+    }
+
+    else if (limit == 8) // no back or left 
+    {
+        cout << "w - Forward" << endl;
+        cout << "d - Right" << endl << endl;
+        cout << "f - Use Flashlight" <<endl;
+
+        cout << "z - Stats" << endl;
+    }
+
     return;
 }
 
@@ -170,6 +247,7 @@ void statusUpdate(Time game_time, Player player)
     }
     cout << endl;
 }
+
 
 bool keyGhost(int rem) // has key to escape, talks to you differently depending on how many ghost remnants the player has
 {
@@ -268,6 +346,88 @@ bool hungryGhost(int item)
 }
 
 
+void candyFound(bool found)
+{
+    if (!found)
+    {
+        cout << "You step on something and it crunches under your foot. You look down" <<endl;
+        cout << "and see a slightly mushed candy bar. You pick it up and see it's an expired" <<endl;
+        cout << "chocolate from the 80s\'. Score! " << endl <<endl;
+
+        cout << "You got some candy!" <<endl; 
+    }
+    if (found)
+    {
+        return;
+    }
+}
+
+
+bool exit(bool key)
+{
+    cout << "As you step you see a glimmer of light reflect off of something metallic. You step closer and " <<endl;
+    cout << "see an old rusty door knob attached to a small rickety wooden door. Theres a small peep hole that " << endl;
+    cout << "you look through to see a small unkept backyard." << endl <<endl;
+
+    cout << "i - Investigate door" << endl;
+    cout << "b - Brake down door" <<endl;
+    cout << "m - Do nothing" << endl;
+
+    char choice;
+    cin >> choice;
+
+    while (choice != 'i' && choice != 'b' && choice != 'm')
+    {
+        cout << "Please make valid selection." <<endl;
+        cin >> choice;
+    }
+
+    if (choice == 'i')
+    {
+        cout << "You step towards the door and try fiddling with the handle. Locked. You try harder to open the" <<endl;
+        cout << "door but it doesn't budge. You look closer at the handle of the door and see a large keyhole." <<endl;
+
+        if (key)
+        {
+            cout << "It looks similar to the one that you traded for earlier, could be worth a shot!" <<endl <<endl;
+
+            cout << "t - Use the key on the door " <<endl;
+            cout << "m - Do nothing" <<endl <<endl;
+
+            cin >> choice;
+
+            if(choice == 't')
+            {
+                return true;
+            }
+
+        }
+        else if (!key)
+        {
+            cout << "There's likely a key around here somewhere to open the door. But where?" <<endl;
+        }
+    }
+
+    else if (choice == 'b')
+    {
+        cout << "You back up a bit to get a running start at the door. You run at full speed and careen your"  << endl;
+        cout << "self onto the door. On impact the door erupts with blue light propelling your soul backwards " <<endl;
+        cout << "and onto the ground with a thud. That would've hurt if you had any nerve endings! " <<endl <<endl;
+        
+        return false;
+    }
+
+    if (choice == 'm')
+    {
+        cout << "You back away from the door and move on with your search for a way out." <<endl <<endl;
+    }
+
+    return false;
+
+}
+
+
+
 /*  Algorithm for play function- 
 
     This function is what is used 
@@ -276,6 +436,8 @@ void play(Time game_time)
 {  
     Player player; // player class
     Flashlight flashlight;
+    bool found_candy1 = false;
+    bool found_candy2 = false;
 
     int start = 0; // initial value to enter if statement
     char input; // to take input from player
@@ -332,7 +494,7 @@ void play(Time game_time)
             }
             else // if the input is none of the offered options
             {
-                while (input != 'w' && input != 's' && input != 'a' ) 
+                while (input != 'w' && input != 's' && input != 'a' ) // if the user didn't make a valid selection
                 {
                     cout << "Please make a valid selection." << endl;
                     cin >> input;
@@ -341,19 +503,48 @@ void play(Time game_time)
             
         }
 
-        if (map.getPlayerRow() == 2 && map.getPlayerCol() == 3)
+        if (map.getPlayerRow() == 2 && map.getPlayerCol() == 3) // if the player has landed on the space of the ghost that holds the key
         {
-            if (keyGhost(player.getRemnants()))
+            if (keyGhost(player.getRemnants())) // if the function returns then the player made a trade for the key
             {
+                player.subRemnants(); // take remnents from player
                 player.subRemnants();
-                player.subRemnants();
-                player.setFoundKey(true);
+                player.setFoundKey(true); // set key to found
             }
         }
 
-        if (map.getPlayerRow() == 6 && map.getPlayerCol() == 9)
+        if (map.getPlayerRow() == 6 && map.getPlayerCol() == 9) // if the player had landed on the space of the ghost that you can give candy
         {
-            hungryGhost(player.getCandy());
+            if (hungryGhost(player.getCandy())) // if it returns true than the player gave candy to the ghost
+            {
+                player.subCandy(); // take away candy
+                player.addRemnants(); // add remnents to players inventory
+                player.addRemnants();
+            }
+
+        }
+        if (map.getPlayerRow() == 11 && map.getPlayerCol() == 9) // if the player has found candy 
+        {
+            candyFound(found_candy1);
+            found_candy1 = true; // make so the candy cannot be found again
+            player.addCandy(); // add candy to players candy stash
+        }
+
+        if (map.getPlayerRow() == 8 && map.getPlayerCol() == 7) // if the player found a seperate pile of candy
+        {
+            candyFound(found_candy2);
+            found_candy2 = true; // make so the candy cannot be found again
+            player.addCandy(); // add candy to players candy stash
+        }
+
+        if (map.getPlayerRow() == 1 && map.getPlayerCol() == 11) // if the player has found the exit 
+        {
+            if (exit(player.getKeyFound()))
+            {
+                player.setEscaped(true);
+                continue;
+            }
+
         }
 
 
@@ -363,7 +554,27 @@ void play(Time game_time)
         
         if (!player.isFlashlightFound()) // if the flashlight has not been found 
         {
-            if (map.getPlayerRow() == 0) // if you can't move forward
+            if (map.getPlayerRow() == 0 && (map.getPlayerCol() == 11)) // if you can't move forward or right
+            {
+                limitedMenuPrint(5);
+            }
+
+            else if (map.getPlayerRow() == 0 && map.getPlayerCol() == 0) // if you can't move forward or left
+            {
+                limitedMenuPrint(6);
+            }
+
+            else if (map.getPlayerRow() == 11 && map.getPlayerCol() == 11) // if you can't move backwards or right
+            {
+                limitedMenuPrint(7);
+            }
+
+            else if (map.getPlayerRow() == 11 && map.getPlayerCol() == 0) // if you can't move backwards or left 
+            {
+                limitedMenuPrint(8);
+            }
+
+            else if (map.getPlayerRow() == 0) // if you can't move forward
             {
                 limitedMenuPrint(1); 
             }
@@ -405,7 +616,6 @@ void play(Time game_time)
             }
             else 
             {
-                //map.move(input);
                 if (!map.move(input))
                 {
                     cout << "You are unable to move in that direction, choose another option." << endl;
@@ -424,24 +634,43 @@ void play(Time game_time)
 
 
 
-        if (player.isFlashlightFound())
+        if (player.isFlashlightFound()) // if the player can now use the flashlight
         {
-            if (map.getPlayerRow() == 0)
+            if (map.getPlayerRow() == 0 && (map.getPlayerCol() == 11)) // if you can't move forward or right
+            {
+                limitedMenuPrintNew(5);
+            }
+
+            else if (map.getPlayerRow() == 0 && map.getPlayerCol() == 0) // if you can't move forward or left
+            {
+                limitedMenuPrintNew(6);
+            }
+
+            else if (map.getPlayerRow() == 11 && map.getPlayerCol() == 11) // if you can't move backwards or right
+            {
+                limitedMenuPrintNew(7);
+            }
+
+            else if (map.getPlayerRow() == 11 && map.getPlayerCol() == 0) // if you can't move backwards or left 
+            {
+                limitedMenuPrintNew(8);
+            } 
+            else if (map.getPlayerRow() == 0)
             {
                 limitedMenuPrintNew(1); 
             }
             
-            if (map.getPlayerRow() == 11)
+            else if (map.getPlayerRow() == 11)
             {
                 limitedMenuPrintNew(4);
             }
 
-            if (map.getPlayerCol() == 0)
+            else if (map.getPlayerCol() == 0)
             {
                 limitedMenuPrintNew(3);
             }
 
-            if (map.getPlayerCol() == 11)
+            else if (map.getPlayerCol() == 11)
             {
                 limitedMenuPrintNew(2);
             }
@@ -477,14 +706,13 @@ void play(Time game_time)
 
             else 
             {
-                //map.move(input);
-                if (!map.move(input))
+                if (!map.move(input)) // if the input isn't valid
                 {
                     cout << "You are unable to move in that direction, choose another option." << endl;
                     cin >> input; 
                 }
                 
-                if (input == 'w' || input == 's')
+                if (input == 'w' || input == 's') // increase time by one hour if the person moves forwards or backwards
                 {
                     game_time.setTimeCount();
                 }  
@@ -502,6 +730,8 @@ void play(Time game_time)
     } while (!player.isEscaped() && game_time.getTimeCount() < 24);
 
 
+
+
     if (game_time.getTimeCount() == 24) // if the time runs out and the player lost the game
     {
         cout << endl;
@@ -511,6 +741,11 @@ void play(Time game_time)
         cout << "huh? Well better luck in your next life ... if you ever escape. \" " << endl << endl;;
 
         cout << "GAME OVER" << endl;
+    }
+
+    if (player.isEscaped())
+    {
+        cout << "you escaped!" <<endl;
     }
 
 

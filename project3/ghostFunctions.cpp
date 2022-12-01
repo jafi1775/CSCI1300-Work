@@ -104,3 +104,84 @@ bool hungryGhost(int item)
     }
 
 }
+
+void candyFound1(bool found)
+{
+    if (!found)
+    {
+        cout << "You step on something and it crunches under your foot. You look down" <<endl;
+        cout << "and see a slightly mushed candy bar. You pick it up and see it's an expired" <<endl;
+        cout << "chocolate from the 80s\'. Score! " << endl <<endl;
+
+        cout << "You got some candy!" <<endl <<endl; 
+    }
+    if (found)
+    {
+        return;
+    }
+}
+
+bool exit(bool key)
+{
+    cout << "As you step you see a glimmer of light reflect off of something metallic. You step closer and " <<endl;
+    cout << "see an old rusty door knob attached to a small rickety wooden door. Theres a small peep hole that " << endl;
+    cout << "you look through to see a small unkept backyard." << endl <<endl;
+
+    cout << "i - Investigate door" << endl;
+    cout << "b - Brake down door" <<endl;
+    cout << "m - Do nothing" << endl;
+
+    char choice;
+    cin >> choice;
+
+    while (choice != 'i' && choice != 'b' && choice != 'm')
+    {
+        cout << "Please make valid selection." <<endl;
+        cin >> choice;
+    }
+
+    if (choice == 'i')
+    {
+        cout << "You step towards the door and try fiddling with the handle. Locked. You try harder to open the" <<endl;
+        cout << "door but it doesn't budge. You look closer at the handle of the door and see a large keyhole." <<endl;
+
+        if (key)
+        {
+            cout << "It looks similar to the one that you traded for earlier, could be worth a shot!" <<endl <<endl;
+
+            cout << "t - Use the key on the door " <<endl;
+            cout << "m - Do nothing" <<endl <<endl;
+
+            cin >> choice;
+
+            if(choice == 't')
+            {
+                return true;
+            }
+
+        }
+        else if (!key)
+        {
+            cout << "There's likely a key around here somewhere to open the door. But where?" <<endl;
+        }
+    }
+
+    else if (choice == 'b')
+    {
+        cout << "You back up a bit to get a running start at the door. You run at full speed and careen your"  << endl;
+        cout << "self onto the door. On impact the door erupts with blue light propelling your soul backwards " <<endl;
+        cout << "and onto the ground with a thud. That would've hurt if you had any nerve endings! " <<endl <<endl;
+        
+        return false;
+    }
+
+    if (choice == 'm')
+    {
+        cout << "You back away from the door and move on with your search for a way out." <<endl <<endl;
+    }
+
+    return false;
+
+}
+
+

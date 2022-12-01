@@ -10,14 +10,15 @@ using namespace std;
 
 Player :: Player()
 {
-    int num_items = 5;
+    int num_items = 0;
     int ghosts_saved = 0;
-    int moves_made = 0;
+    int num_candy = 0;
     int remnants_collected = 0;
-    bool key_found = false;
-    bool escaped = false;
+    bool key_found = true;
+    bool escaped = true;
     bool flashlight_found = false;
 }
+
 
 void Player :: printMyItems()
 {

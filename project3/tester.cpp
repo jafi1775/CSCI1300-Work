@@ -18,9 +18,9 @@ int main() // tester for random time function
      player.setFoundKey(false);
      player.setEscaped(false);
 
-    cout << player.getGhostsSaved() << endl;
-    cout << player.getNumItems() <<endl;
-    cout << player.getKeyFound() << endl;
-    cout << player.isEscaped() <<endl;
+    cout << "A:" << player.getGhostsSaved() << endl;
+    cout << "B: " << player.getNumItems() <<endl;
+    cout << "C: " << player.getKeyFound() << endl;
+    cout << "D: " << player.isEscaped() <<endl;
 
 }
