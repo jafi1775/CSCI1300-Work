@@ -530,6 +530,9 @@ void play(Time game_time)
     bool found_candy1 = false; // each boolean is for something interactive on the map that should not show again after use
     bool found_candy2 = false;
     bool guess_game = false;
+    bool cat_toy = false;
+
+    bool lights_on = false;
 
     int start = 0; // initial value to enter if statement
     char input; // to take input from player
@@ -547,19 +550,18 @@ void play(Time game_time)
     //map.displayMap();
 
     assert(map.addGhost(0,0)); // ghosts 
-    assert(map.addGhost(2,3));
-    assert(map.addGhost(5,5));
+    assert(map.addGhost(2,3)); 
     assert(map.addGhost(6,9));
-    assert(map.addGhost(8,3));
+    assert(map.addGhost(8,3)); // cat
 
     assert(map.addItem(7,0)); // flashlight
 
-    assert(map.addItem(8,7)); // non interactive features or items
-    assert(map.addItem(11,9)); 
-    assert(map.addItem(0,8));
-    assert(map.addItem(1,5));
-    assert(map.addItem(6,2));
-    assert(map.addItem(3,8));
+    assert(map.addItem(8,7)); // type writer
+    assert(map.addItem(11,9)); // candy
+    assert(map.addItem(0,8)); // flashlight
+    assert(map.addItem(11,1)); // cat toy
+    assert(map.addItem(6,2)); // candy
+    assert(map.addItem(3,8)); // clock
 
     do
     {
@@ -577,8 +579,8 @@ void play(Time game_time)
                     game_time.setTimeCount();
                 }                
                 
-                map.displayMap(); // to check work
-                cout << endl;
+                // map.displayMap(); // to check work
+                // cout << endl;
             }
             else if (input == 'z') // if the player wants to check stats
             {
@@ -640,7 +642,7 @@ void play(Time game_time)
 
         }
 
-        if (map.getPlayerRow() == 8 && map.getPlayerCol() == 7) // if the player found a seperate pile of candy
+        if (map.getPlayerRow() == 6 && map.getPlayerCol() == 2) // if the player found a seperate pile of candy
         {
             candyFound(found_candy2);
             
@@ -682,6 +684,108 @@ void play(Time game_time)
             }
             guess_game = true;
         }
+
+        if (map.getPlayerRow() == 8 && map.getPlayerCol() == 7)
+        {
+            if (input != 'z')
+            {
+                cout << "On a small round table is an old but well kept type writer. There is fresh paper loaded and ink on" << endl;
+                cout << "the keys." <<endl <<endl;
+
+                cout << "t - Type a message" <<endl;
+                cout << "m - Do nothing " <<endl;
+
+                char choice;
+                cin >> choice;
+
+                while (choice != 't' && choice != 'm')
+                {
+                    cout << "Plese make valid selection." <<endl;
+                    cin>> choice;
+                }
+
+                if (choice == 't')
+                {
+                    cout <<"What message would you like to type?" <<endl <<endl;
+
+                    string message;
+                    cin >>message;
+                    cout <<endl; // formatting space
+
+                    if (message == "Shivering-Spines")
+                    {
+                        cout << "Once you finish typing the last \"s\" onto the page the type writer sends a shock to your" <<endl;
+                        cout << "fingertips. And after a moment, the inside of the rickety house starts to illuminate," <<endl;
+                        cout << "revealing all that lives within the house." <<endl;
+
+                        lights_on = true;
+                    }
+                    else 
+                    {
+                        cout << "\"" << message << "\" is written in bold dark letters across the crisp page. " << endl;
+                    }
+
+                }
+            }
+
+            
+        }
+
+
+        if (map.getPlayerRow() == 11 && map.getPlayerCol() == 1) // cat toy
+        {
+            if (cat_toy == false)
+            {
+                cout << "You kick something as you walk and it rolls jingling across the floor. You walk over and pick up " << endl;
+                cout << "the small yarn ball with bells attached that you had kicked." <<endl <<endl;
+
+                cout << "You got a cat toy!" <<endl <<endl;
+
+                player.addMyItem("Cat Toy");
+                player.addItem();
+                cat_toy = true;
+            }
+
+        }
+
+        if (map.getPlayerRow() == 8 && map.getPlayerCol() == 3) // cat 
+        {
+            if (input != 'z')
+            {
+                cout << "An orange tabby sits near you, staring at you gently. You step closer to the cat but it hisses at you" << endl;
+                cout << "the closer you get. From this distance you can see attatched to its collar is a ghost remnant." <<endl <<endl;
+                
+                if (cat_toy)
+                {
+                    cout << "i - Use cat toy" <<endl ;
+                    cout << "m - Do nothing " <<endl << endl;
+
+                    char choice_2;
+                    cin>>choice_2;
+
+                    while (choice_2 != 'i' && choice_2 != 'm')
+                    {
+                        cout << "Please enter valid selection." << endl;
+                        cin >> choice_2;
+                    }
+
+                    if (choice_2 == 'i')
+                    {
+                        cout << "You get the cat toy you had found earlier and begin to tangle it above the tabby's head. The cat" <<endl;
+                        cout << "is timid at first, just watching and occasionally wapping the toy, but as you continue to dangle " <<endl;
+                        cout << "the toy above it's head, it starts to play with the yarn. Once the cat seems playful and calm you " <<endl;
+                        cout << "you snatch the remnant from its collar." <<endl <<endl;
+
+                        cout << "You got a ghost remnant!" <<endl << endl;
+
+                        player.addRemnants();
+                    }
+                }
+                cat_toy = false;
+            }
+        }
+
+
 
 
 
@@ -739,6 +843,7 @@ void play(Time game_time)
 
             cin >> input; // take players input from menu
 
+            cout <<endl; // add space for formatting
             
             while (input != 'w' && input != 'd' && input != 's' && input != 'a' && input != 'z')
             {
@@ -764,8 +869,11 @@ void play(Time game_time)
                     game_time.addTime();
                 }  
 
-                map.displayMap(); // to check and debug
-                cout << endl;
+                if(lights_on)
+                {
+                    map.displayMap(); // to check and debug
+                    cout << endl;
+                }
             }
         }
 
@@ -855,8 +963,11 @@ void play(Time game_time)
                     game_time.addTime();
                 }  
 
-                map.displayMap(); // to check and debug
-                cout << endl;
+                if (lights_on)
+                {
+                    map.displayMap(); // to check and debug
+                    cout << endl;
+                }
             }
         }
 

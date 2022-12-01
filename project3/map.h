@@ -11,7 +11,7 @@ class Map
 private:
     const char NOTHING = '+'; // marker for unexplored spaces
     const char STORY = 'N';
-    const char ITEM = 'F';       // marker for room locations
+    const char ITEM = 'I';       // marker for room locations
     const char GHOST = 'G';        // marker for NPC locations
     const char PLAYER = 'X';      // marker for party position
     const char ESCAPE = 'E';       // marker for dungeon exit

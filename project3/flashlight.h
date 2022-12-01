@@ -48,7 +48,7 @@ class Flashlight
 
         void setSpaces(int row, int column);
 
-        
+        void printFlashlight();
 
 
 };
