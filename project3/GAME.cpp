@@ -565,7 +565,7 @@ void play(Time game_time)
     assert(map.addItem(8,7)); // type writer
     assert(map.addItem(11,9)); // candy
     assert(map.addItem(0,8)); // flashlight
-    assert(map.addItem(1,5)); // cat toy
+    assert(map.addItem(11,1)); // cat toy
     assert(map.addItem(6,2)); // candy
     assert(map.addItem(3,8)); // clock
 
@@ -585,8 +585,6 @@ void play(Time game_time)
                     game_time.setTimeCount();
                 }                
                 
-                // map.displayMap(); // to check work
-                // cout << endl;
             }
             else if (input == 'z') // if the player wants to check stats
             {
@@ -603,6 +601,7 @@ void play(Time game_time)
             
         }
 
+        
         if (map.getPlayerRow() == 2 && map.getPlayerCol() == 3) // if the player has landed on the space of the ghost that holds the key
         {
             if (input != 'z')
@@ -738,7 +737,7 @@ void play(Time game_time)
         }
 
 
-        if (map.getPlayerRow() == 1 && map.getPlayerCol() == 5)
+        if (map.getPlayerRow() == 11 && map.getPlayerCol() == 1) // cat toy
         {
             if (cat_toy == false)
             {
@@ -754,7 +753,7 @@ void play(Time game_time)
 
         }
 
-        if (map.getPlayerRow() == 8 && map.getPlayerCol() == 3)
+        if (map.getPlayerRow() == 8 && map.getPlayerCol() == 3) // cat 
         {
             if (input != 'z')
             {
@@ -1035,6 +1034,7 @@ void play(Time game_time)
     
 }
 
+
 int main()
 {
     int menu_input = 1; // initial menu input
@@ -1060,7 +1060,7 @@ int main()
     switch (menu_input)
     {
         case 1: 
-            //Time time1;
+            game_time.setTime(0);
             cout << endl << "The clock strikes midnight in a small suburban town, it is officially Halloween. You're a " << endl;
             cout << "young jokester who loooooooves Halloween. In your anticipation for the special night you went" << endl;
             cout << "exploring the abandoned neighborhoods that your parents told you never to venture." << endl << endl;

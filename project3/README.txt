@@ -31,4 +31,9 @@ midnight or else you will be stuck there forever as well.
 To escape the house you must collect a minimum of 3 ghost remnants,
 but the more you collect the better! You must also escape before time
 in game reaches midnight on Halloween (24). You navigate through the 
-haunted house using wasd, and can not see where you are going.
+haunted house using wasd, and all the lights are off so you can not see
+where you are going. Good luck!
+
+Tip : If you are struggling in the game, I suggest moving left to right 
+until you cannot to cover all your bases. And once you've done that 
+move forward.

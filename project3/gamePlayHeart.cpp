@@ -579,8 +579,6 @@ void play(Time game_time)
                     game_time.setTimeCount();
                 }                
                 
-                // map.displayMap(); // to check work
-                // cout << endl;
             }
             else if (input == 'z') // if the player wants to check stats
             {
@@ -597,6 +595,7 @@ void play(Time game_time)
             
         }
 
+        
         if (map.getPlayerRow() == 2 && map.getPlayerCol() == 3) // if the player has landed on the space of the ghost that holds the key
         {
             if (input != 'z')
