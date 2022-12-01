@@ -13,10 +13,9 @@ class Player
 {
 
     private:
-        vector <string> my_items[5];
+        vector <string> my_items;
         int num_items;
         int num_candy;
-        int ghosts_saved;
         int remnants_collected;
         bool key_found;
         bool escaped;
@@ -27,9 +26,13 @@ class Player
         Player();
         void printMyItems();
         void addMyItem(string item);
+        int findItem(string item);
+        void removeItem(int place);
+
         int getNumItems();
         void setNumItems(int new_item_num);
         void addItem();
+        void subItem();
 
         int getCandy();
         void addCandy();
@@ -39,16 +42,13 @@ class Player
         int getRemnants();
         void addRemnants();
         void subRemnants();
+        void setRemnants(int num);
 
         bool getKeyFound();
         void setFoundKey(bool is_found);
 
         void setEscaped(bool is_escaped);
         bool isEscaped();
-
-        void setGhostsSaved(int ghosts);
-        void addGhostsSaved();
-        int getGhostsSaved();
 
         bool isFlashlightFound();
         void setFlashlightFound(bool is_found);

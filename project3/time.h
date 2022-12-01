@@ -18,6 +18,7 @@ class Time
         void randTime();
         int getTime();
         void setTime(int new_time);
+        void addTime();
         int getTimeCount();
         void setTimeCount();
 };

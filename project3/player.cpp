@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include "player.h"
+#include <vector>
 using namespace std;
 
 Player :: Player()
@@ -22,9 +23,9 @@ Player :: Player()
 
 void Player :: printMyItems()
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < num_items ; i++)
     {
-        cout << my_items[i] << ", "; 
+        cout << my_items.at(i) << " "; 
     }
     return;
 }
@@ -69,15 +70,6 @@ bool Player :: isEscaped()
     return escaped;
 }
 
-void Player :: addGhostsSaved()
-{
-    ghosts_saved++;
-}
-
-int Player :: getGhostsSaved()
-{
-    return ghosts_saved;
-}
 
 bool Player :: isFlashlightFound()
 {
@@ -94,10 +86,6 @@ void Player :: setEscaped(bool is_escaped)
     escaped = is_escaped;
 }
 
-void Player :: setGhostsSaved(int ghosts)
-{
-    ghosts_saved = ghosts;
-}
 
 void Player :: addItem()
 {
@@ -106,7 +94,7 @@ void Player :: addItem()
 
 void Player :: addMyItem(string item)
 {
-    my_items[num_items] = item;
+    my_items.push_back(item);
 }
 
 int Player :: getCandy()
@@ -127,4 +115,36 @@ void Player :: subCandy()
 void Player :: setNumCandy(int num)
 {
     num_candy = num;
+}
+
+int Player :: findItem(string item)
+{
+
+    for (int i = 0; i < my_items.size(); i ++)
+    {
+        if (my_items.at(i) == item)
+        {
+            return i;
+        }
+    }
+
+    return 0;
+}
+
+void Player :: removeItem(int place)
+{
+    my_items.erase(my_items.begin() + place);
+    return;
+}
+
+void Player :: subItem()
+{
+    num_items--;
+    return;
+}
+
+void Player :: setRemnants(int num)
+{
+    remnants_collected = num;
+    return;
 }

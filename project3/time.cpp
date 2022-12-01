@@ -43,7 +43,11 @@ void Time :: setTimeCount()
 
 void Time :: randTime()
 {
-    srand(time(0));
 
     timetime = 24 - (rand() % (10) + 12);
+}
+
+void Time :: addTime()
+{
+    timetime ++;
 }

@@ -5,6 +5,7 @@
 #include "player.h"
 #include "flashlight.h"
 #include "story_build.h"
+#include <fstream>
 
 using namespace std;
 
@@ -235,7 +236,7 @@ void statusUpdate(Time game_time, Player player)
 {
 
     cout << game_time.getTimeCount() << " hours have passed." << endl;
-    cout << "You've saved " << player.getGhostsSaved() << " ghosts." << endl;
+    cout << "You've gathered " << player.getRemnants() << " ghost remnants." << endl;
     cout << "You have: " ;
     if (player.getNumItems() == 0)
     {
@@ -311,6 +312,11 @@ bool hungryGhost(int item)
         char choice;
         cin >> choice;
         cout << endl;
+        while (choice != 'y' && choice != 'n')
+        {
+            cout << "Please make a valid selection" <<endl;
+            cin >> choice;
+        }
 
         if (choice == 'y')
         {
@@ -333,6 +339,7 @@ bool hungryGhost(int item)
             cout << "continues searching for a meal." <<endl <<endl;
             return false;
         }
+
     
     }
 
@@ -343,6 +350,7 @@ bool hungryGhost(int item)
         return false;
     }
     return false;
+
 }
 
 
@@ -404,7 +412,7 @@ bool exit(bool key)
         }
         else if (!key)
         {
-            cout << "There's likely a key around here somewhere to open the door. But where?" <<endl;
+            cout << "There's likely a key around here somewhere to open the door. But where?" <<endl <<endl;
         }
     }
 
@@ -427,6 +435,88 @@ bool exit(bool key)
 }
 
 
+int guessGame()
+{
+    cout << "A small ghost sits on the ground fidgetting with a rubix cude, a sudoku book, and a game of chess." <<endl;
+    cout << "The ghost looks up from its puzzles and sees you approaching. It looks you up and down distastfully. " <<endl <<endl;
+
+    cout << "\"Great, another dumb little mortal to distract me from my puzzles. I suppose you want some remnants" <<endl;
+    cout << "from me huh? Yeah that's what I thought. Well look I'm not just gonna hand some over for you to waste " <<endl;
+    cout << "on your \'precious\' life. You got yourself in this mess, and I am certainly not responsible for that.\" " <<endl <<endl;
+
+    cout << "p - Try to persuade the ghost" <<endl;
+    cout << "i - Insult the ghost" <<endl;
+    cout << "m - Do nothing" << endl <<endl;
+
+    char choice;
+
+    while (choice != 'p' && choice != 'i' && choice != 'm') // to check if the player made a valid selection
+    {
+        cout << "Please make valid selection." <<endl;
+        cin >> choice;
+    }
+
+    if (choice == 'p')
+    {
+        cout << "You then propose a game to the ghost in exchange for remnants. The ghost looks at you for a moment " <<endl;
+        cout << "before saying, \"A game you say, well that could be interesting. But there's certainly no game where" <<endl;
+        cout << "you would be capable of out smarting me. Simply impossible! ... Unless ... A game of chance! That " <<endl;
+        cout << "could be sufficient. So! Here's the rules: I choose a number between 0 and 9. You try and guess what " <<endl;
+        cout << "number I'm thinking of. Pretty simple. But you only get ONE guess, and I will only play once. Sound fair?" <<endl <<endl;
+
+        cout << "I've chosen my number, now it's your turn. What's your guess?" << endl <<endl;
+
+        int guess;
+        cin >> guess;
+        int number = rand() % (10);
+
+        if(guess == number)
+        {
+            cout << "My goodness you got it!!! I suppose luck is on your side today. Seems as though I owe you these..." <<endl <<endl;
+            
+            cout << "You got 4 ghost remnants!" <<endl;
+             
+            return 1;
+        }
+
+        if (guess != number && guess < 10 && guess > -1)
+        {
+            cout << "Unfortunatly, that is not the correct guess... Well that was fun for a moment! Now leave me to " <<endl;
+            cout << "my puzzles, I must finish this sudoku page before I can finish my chess game. Now scram!" <<endl << endl;
+            return 0;
+        }
+
+        else 
+        {
+            cout << "Well that was just a waste of a guess. If you're not going to take this game seriously I will not" <<endl;
+            cout << "be playing! Go waste somebody elses time." <<endl <<endl;
+
+            return 0;
+        }
+
+
+
+    }
+
+    if (choice == 'i') 
+    {
+        cout << "\"... Well that was just rude. Did you think that was going to help your chance of getting something" <<endl;
+        cout << "from me?? You can forget about that now bud! Go bother someone else!\"" << endl <<endl;
+
+        return 0;
+    }
+
+    if (choice == 'm')
+    {
+        return 0;
+    }
+
+    
+    return 0;
+
+}
+
+
 
 /*  Algorithm for play function- 
 
@@ -436,13 +526,15 @@ void play(Time game_time)
 {  
     Player player; // player class
     Flashlight flashlight;
-    bool found_candy1 = false;
+
+    bool found_candy1 = false; // each boolean is for something interactive on the map that should not show again after use
     bool found_candy2 = false;
+    bool guess_game = false;
 
     int start = 0; // initial value to enter if statement
     char input; // to take input from player
 
-    player.setGhostsSaved(0); // set values for objects in player class
+    player.setRemnants(0); // set values for objects in player class
     player.setNumItems(0);
     player.setFoundKey(false);
     player.setEscaped(false);
@@ -505,36 +597,60 @@ void play(Time game_time)
 
         if (map.getPlayerRow() == 2 && map.getPlayerCol() == 3) // if the player has landed on the space of the ghost that holds the key
         {
-            if (keyGhost(player.getRemnants())) // if the function returns then the player made a trade for the key
+            if (input != 'z')
             {
-                player.subRemnants(); // take remnents from player
-                player.subRemnants();
-                player.setFoundKey(true); // set key to found
+                if (keyGhost(player.getRemnants())) // if the function returns then the player made a trade for the key
+                {
+                    player.subRemnants(); // take remnents from player
+                    player.subRemnants();
+                    player.setFoundKey(true); // set key to found
+                    player.addMyItem("Key");
+                    player.addItem();
+                }
             }
         }
 
         if (map.getPlayerRow() == 6 && map.getPlayerCol() == 9) // if the player had landed on the space of the ghost that you can give candy
         {
-            if (hungryGhost(player.getCandy())) // if it returns true than the player gave candy to the ghost
+            if (input != 'z')
             {
-                player.subCandy(); // take away candy
-                player.addRemnants(); // add remnents to players inventory
-                player.addRemnants();
+                if (hungryGhost(player.getCandy())) // if it returns true than the player gave candy to the ghost
+                {
+                    player.subCandy(); // take away candy
+                    player.addRemnants(); // add remnents to players inventory
+                    player.addRemnants();
+                    player.removeItem(player.findItem("Candy Bar"));
+                    player.subItem();
+                    
+                }
             }
 
         }
         if (map.getPlayerRow() == 11 && map.getPlayerCol() == 9) // if the player has found candy 
         {
             candyFound(found_candy1);
+            
+            if (!found_candy1)
+            {
+                player.addCandy(); // add candy to players candy stash
+                player.addMyItem("Candy Bar");
+                player.addItem();
+            }
             found_candy1 = true; // make so the candy cannot be found again
-            player.addCandy(); // add candy to players candy stash
+
         }
 
         if (map.getPlayerRow() == 8 && map.getPlayerCol() == 7) // if the player found a seperate pile of candy
         {
             candyFound(found_candy2);
+            
+            if(!found_candy2)
+            {
+                player.addCandy(); // add candy to players candy stash
+                player.addMyItem("Candy Bar");
+                player.addItem();
+            }
             found_candy2 = true; // make so the candy cannot be found again
-            player.addCandy(); // add candy to players candy stash
         }
 
         if (map.getPlayerRow() == 1 && map.getPlayerCol() == 11) // if the player has found the exit 
@@ -545,6 +661,26 @@ void play(Time game_time)
                 continue;
             }
 
+        }
+
+        if (map.getPlayerRow() == 0 && map.getPlayerCol() == 0) // if the player found the games ghost
+        {
+            if ( guess_game == false)
+            {
+                if (guessGame() == 1)
+                {
+                    player.addRemnants(); // add remnents to players inventory
+                    player.addRemnants();
+                    player.addRemnants();
+                    player.addRemnants();
+                }
+            }
+
+            else if (input != 'z') // if the input isn't to see the stats
+            {
+                cout << "The game ghost sees you approach once again and says, \"Haven't I told you mortal? Go AWAY! \"." << endl <<endl;
+            }
+            guess_game = true;
         }
 
 
@@ -625,6 +761,7 @@ void play(Time game_time)
                 if (input == 'w' || input == 's')
                 {
                     game_time.setTimeCount();
+                    game_time.addTime();
                 }  
 
                 map.displayMap(); // to check and debug
@@ -715,6 +852,7 @@ void play(Time game_time)
                 if (input == 'w' || input == 's') // increase time by one hour if the person moves forwards or backwards
                 {
                     game_time.setTimeCount();
+                    game_time.addTime();
                 }  
 
                 map.displayMap(); // to check and debug
@@ -727,12 +865,12 @@ void play(Time game_time)
 
         
 
-    } while (!player.isEscaped() && game_time.getTimeCount() < 24);
+    } while (!player.isEscaped() && game_time.getTime() < 24);
 
 
 
 
-    if (game_time.getTimeCount() == 24) // if the time runs out and the player lost the game
+    if (game_time.getTime() == 24) // if the time runs out and the player lost the game
     {
         cout << endl;
         cout << "You hear a clock strike 12 times. The deep ominous voice returns, " << endl;
@@ -745,7 +883,32 @@ void play(Time game_time)
 
     if (player.isEscaped())
     {
-        cout << "you escaped!" <<endl;
+        cout << "Suddenly you feel your body began to re-merge with your soul, and you take a step back into " <<endl;
+        cout << "the real world. Your feet land on the porch of the house, mysteriously back where you had entered " <<endl;
+        cout << "the house originally. But before you can begin to process anything, you hear a deep whisper in the " <<endl;
+        cout << "back of your head, \"You escaped this time human. But be warned, if you return you will not get the " <<endl;
+        cout << "chance to again.\" " <<endl <<endl;
+
+        cout << "YOU WIN!" <<endl <<endl;
+
+        cout <<"Check file \"WinningStats.txt\" for your stats!" <<endl;
+
+        ofstream winner;
+
+        winner.open("WinningStats.txt");
+
+        winner << game_time.getTimeCount() << " hours passed on your play through." << endl;
+        winner << "You gathered " << player.getRemnants() << " ghost remnants." << endl;
+        if (player.isFlashlightFound())
+        {
+            winner << "You found the flashlight!" << endl << endl;
+        }
+        else 
+        {
+            winner << "You did not find the flashlight." << endl <<endl;
+        }
+
+        winner << "Secret Message : Shivering Spines" <<endl;
     }
 
 
@@ -762,7 +925,7 @@ int main()
 {
     Time game_time;
 
-    game_time.setTime(12);
+    game_time.setTime(0);
 
     play(game_time);
     

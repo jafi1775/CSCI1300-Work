@@ -3,10 +3,14 @@
 // Recitation: 302 – Michelle Ramsahoye
 // Project 3, Game driver file
 
-
 #include <iostream>
-#include "time.cpp"
 #include "map.h"
+#include "time.h"
+#include <string>
+#include "player.h"
+#include "flashlight.h"
+#include "story_build.h"
+#include <fstream>
 
 
 using namespace std;
@@ -15,6 +19,7 @@ int main()
 {
     int menu_input = 1; // initial menu input
     Time game_time; // creates time object
+    srand(time(0));
 
     do // checks if input for menu is valid 
     {
