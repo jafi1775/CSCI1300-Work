@@ -38,24 +38,19 @@ void Player :: setNumItems(int new_item_num)
     num_items = new_item_num;
 }
 
-int Player :: getMoves()
-{
-    return moves_made;
-}
-
-void Player :: setMoves(int new_moves_count)
-{
-    moves_made = new_moves_count;
-}
-
 int Player :: getRemnants()
 {
     return remnants_collected;
 }
 
-void Player :: setRemnants(int blob)
+void Player :: addRemnants()
 {
-    remnants_collected = blob;
+    remnants_collected++;
+}
+
+void Player :: subRemnants()
+{
+    remnants_collected++;
 }
 
 bool Player :: getKeyFound()
@@ -101,4 +96,34 @@ void Player :: setEscaped(bool is_escaped)
 void Player :: setGhostsSaved(int ghosts)
 {
     ghosts_saved = ghosts;
+}
+
+void Player :: addItem()
+{
+    num_items++;
+}
+
+void Player :: addMyItem(string item)
+{
+    my_items[num_items] = item;
+}
+
+int Player :: getCandy()
+{
+    return num_candy;
+}
+
+void Player :: addCandy()
+{
+    num_candy++;
+}
+
+void Player :: subCandy()
+{
+    num_candy--;
+}
+
+void Player :: setNumCandy(int num)
+{
+    num_candy = num;
 }

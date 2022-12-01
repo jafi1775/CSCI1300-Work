@@ -14,8 +14,8 @@ class Player
     private:
         string my_items[5];
         int num_items;
+        int num_candy;
         int ghosts_saved;
-        int moves_made;
         int remnants_collected;
         bool key_found;
         bool escaped;
@@ -25,19 +25,30 @@ class Player
     public: 
         Player();
         void printMyItems();
+        void addMyItem(string item);
         int getNumItems();
         void setNumItems(int new_item_num);
-        int getMoves();
-        void setMoves(int new_moves_count);
+        void addItem();
+
+        int getCandy();
+        void addCandy();
+        void subCandy();
+        void setNumCandy(int num);
+
         int getRemnants();
-        void setRemnants(int blob);
+        void addRemnants();
+        void subRemnants();
+
         bool getKeyFound();
         void setFoundKey(bool is_found);
+
         void setEscaped(bool is_escaped);
         bool isEscaped();
+
         void setGhostsSaved(int ghosts);
         void addGhostsSaved();
         int getGhostsSaved();
+
         bool isFlashlightFound();
         void setFlashlightFound(bool is_found);
 };

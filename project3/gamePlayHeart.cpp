@@ -171,6 +171,103 @@ void statusUpdate(Time game_time, Player player)
     cout << endl;
 }
 
+bool keyGhost(int rem) // has key to escape, talks to you differently depending on how many ghost remnants the player has
+{
+    if (rem < 3)
+    {
+        cout << "\"AHHHHHHHHHHHHHHHH\" piercing screams come from above you." <<endl <<endl;
+
+        cout << "\"Oh my GOODNESS. \" A chilling figure lowers from the ceiling and " << endl;
+        cout << "looks upon you. It says, \"You scared me nearly to life! What is a " <<endl;
+        cout << "lively soul like you doing around here? Surely you are newly dead. Or perhaps" << endl;
+        cout << "not dead at all. You seem to be a living spirit stuck here in this cursed home.\"" << endl <<endl;
+
+        cout << "While talking to this ghost you notice an old rusty key dangling from it's " <<endl;
+        cout << "neck and the ghost notices you staring at the key. \"Oh you like my necklace? I've had" <<endl;
+        cout << "this for as long as I've been stuck in this house. I couldn't bare to part with it." <<endl; 
+        cout << "Perhaps if someone offered a fair trade for it... 3 ghost remnants would be sufficient.\"" <<endl;
+
+        cout << "\"Oh well excuse me for blabering ooon and ooon, I must get back to my duties. Good luck" << endl;
+        cout << "on your travls young one.\" You then see the ghost start to rise back up to the ceiling " <<endl;
+        cout << "until it is out of sight." <<endl;
+
+        return false;
+
+    }
+
+    else
+    {
+        cout << "\"Oh my oh my\" A chilling figure lowers from the ceiling and looks " << endl;
+        cout << "upon you. \"Well hello there! I couldn't help but notice you have a few ghost " <<endl;
+        cout << "remnants on you, I've been looking EVERY where for a few of those. Of course " << endl;
+        cout << "by everywhere I mean every where in my little nook here  ... Perhaps you'd care " <<endl;
+        cout << " to trade? I have a necklace that would suit you quiet nicely. Oh you will! How" <<endl;
+        cout << "wonderful! Here, let me just tie the necklace onto you now. Thanks for the trade " <<endl; 
+        cout << "travler! I hope to see you again soon!\" The ghost rises back up to the ceiling slowly." <<endl <<endl;
+
+        cout << "You got a key!" <<endl;
+
+        return true;
+
+    }
+
+}
+
+// if returns true, remove one candy from characters inventory and give 2 ghost remnants
+bool hungryGhost(int item)
+{
+
+    cout << "\"BlAaaaAaAaaAAAAaAAaH\"" <<endl;
+    cout << "A rabid looking figure appears out of the darkness. You take a " << endl;
+    cout << "step closer to it to see it is a wolf-like looking ghost scavenging the " <<endl;
+    cout << "small corner it seems to guard. " << endl <<endl;
+
+    if (item > 0)
+    {
+        cout << "It doesn't seem like the creature has found anything to eat. Maybe you " << endl;
+        cout << "could give it something to snack on." <<endl << endl;
+
+        cout << "y - Give the Ghost some candy." << endl;
+        cout << "n - Walk away slowly. Hopefully it doesn't bite." <<endl;
+
+        char choice;
+        cin >> choice;
+        cout << endl;
+
+        if (choice == 'y')
+        {
+            cout << "You reach out your hand holding some of the candy you had found on the floor" <<endl;
+            cout << "earlier. The creature darts it's eyes towards you and steps closer to inspect your offering." <<endl <<endl;
+
+            cout << "It sniffs your hand and gently takes the candy out of your hand, slowly chewing." <<endl;
+            cout << "The creatures fearful and tense nature disappears almost instantly and begins wagging it's tail." <<endl;
+            cout << "It starts trotting around you excitedly and rubs against your leg in gratitude. After a moment" <<endl;
+            cout << "of thanks the dog-ghost trots off into the dark and returns a moment later with 2 ghost remnants" <<endl; 
+            cout << "it likely tried to eat earlier becuase it was covered in ghost dog slobber." <<endl <<endl;
+
+            cout << "You got 2 ghost remnants!" <<endl <<endl;
+            return true;
+        }
+
+        if (choice == 'n')
+        {
+            cout << "You back away from the rabid ghost. It gives you no attention as it " <<endl;
+            cout << "continues searching for a meal." <<endl <<endl;
+            return false;
+        }
+    
+    }
+
+    if (item == 0)
+    {
+        cout << "The creature seems hungry. It would proably appreciate some food." <<endl <<endl;
+
+        return false;
+    }
+    return false;
+}
+
+
 /*  Algorithm for play function- 
 
     This function is what is used 
@@ -179,6 +276,7 @@ void play(Time game_time)
 {  
     Player player; // player class
     Flashlight flashlight;
+
     int start = 0; // initial value to enter if statement
     char input; // to take input from player
 
@@ -186,6 +284,8 @@ void play(Time game_time)
     player.setNumItems(0);
     player.setFoundKey(false);
     player.setEscaped(false);
+    player.setFlashlightFound(false);
+    player.setNumCandy(0);
 
     //cout << player.getGhostsSaved() << endl;
 
@@ -193,7 +293,7 @@ void play(Time game_time)
     //map.displayMap();
 
     assert(map.addGhost(0,0)); // ghosts 
-    assert(map.addGhost(3,3));
+    assert(map.addGhost(2,3));
     assert(map.addGhost(5,5));
     assert(map.addGhost(6,9));
     assert(map.addGhost(8,3));
@@ -240,6 +340,24 @@ void play(Time game_time)
             }
             
         }
+
+        if (map.getPlayerRow() == 2 && map.getPlayerCol() == 3)
+        {
+            if (keyGhost(player.getRemnants()))
+            {
+                player.subRemnants();
+                player.subRemnants();
+                player.setFoundKey(true);
+            }
+        }
+
+        if (map.getPlayerRow() == 6 && map.getPlayerCol() == 9)
+        {
+            hungryGhost(player.getCandy());
+        }
+
+
+
 
         // check position of player to see if they encountered ghost, item, or non interative feature
         
@@ -347,12 +465,13 @@ void play(Time game_time)
             if (input == 'z')
             {
                 statusUpdate(game_time, player);
+
             }
 
             // if they use the flashlight 
-            else if (input == 'p')
+            if (input == 'p')
             {
-                flashlight.setSpaces(map.getPlayerRow(), map.getPlayerCol());
+                flashlight.setSpaces(map.getPlayerRow(), map.getPlayerCol()); ////
 
             }
 
@@ -404,13 +523,15 @@ void play(Time game_time)
 
 
 
-// int main()
-// {
-//     Time game_time;
+int main()
+{
+    Time game_time;
 
-//     play(game_time);
+    game_time.setTime(12);
+
+    play(game_time);
     
 
 
-//     return 0;
-// }
+    return 0;
+}

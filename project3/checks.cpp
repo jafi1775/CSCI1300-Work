@@ -32,10 +32,10 @@ int main()
     }
 
     //ghost
-    if (map.getPlayerRow() == 3 && map.getPlayerCol() == 3)
-    {
+    // if (map.getPlayerRow() == 2 && map.getPlayerCol() == 3)
+    // {
 
-    }
+    // }
 
     //ghost
     if (map.getPlayerRow() == 5 && map.getPlayerCol() == 5)
@@ -43,11 +43,11 @@ int main()
 
     }
 
-    //ghost
-    if (map.getPlayerRow() == 6 && map.getPlayerCol() == 9)
-    {
+    // //ghost
+    // if (map.getPlayerRow() == 6 && map.getPlayerCol() == 9)
+    // {
 
-    }
+    // }
 
     //ghost
     if (map.getPlayerRow() == 8 && map.getPlayerCol() == 3)

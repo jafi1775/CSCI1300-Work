@@ -27,7 +27,7 @@ bool keyGhost(int rem) // has key to escape, talks to you differently depending 
 
         cout << "\"Oh well excuse me for blabering ooon and ooon, I must get back to my duties. Good luck" << endl;
         cout << "on your travls young one.\" You then see the ghost start to rise back up to the ceiling " <<endl;
-        cout << "until it is out of sight." <<endl;
+        cout << "until it is out of sight." <<endl <<endl;
 
         return false;
 
@@ -41,7 +41,9 @@ bool keyGhost(int rem) // has key to escape, talks to you differently depending 
         cout << "by everywhere I mean every where in my little nook here  ... Perhaps you'd care " <<endl;
         cout << " to trade? I have a necklace that would suit you quiet nicely. Oh you will! How" <<endl;
         cout << "wonderful! Here, let me just tie the necklace onto you now. Thanks for the trade " <<endl; 
-        cout << "travler! I hope to see you again soon!\" The ghost rises back up to the ceiling slowly." <<endl;
+        cout << "travler! I hope to see you again soon!\" The ghost rises back up to the ceiling slowly." <<endl <<endl;
+
+        cout << "You got a key!" <<endl;
 
         return true;
 
@@ -50,7 +52,7 @@ bool keyGhost(int rem) // has key to escape, talks to you differently depending 
 }
 
 // if returns true, remove one candy from characters inventory and give 2 ghost remnants
-bool hungryGhost(bool has_item)
+bool hungryGhost(int item)
 {
 
     cout << "\"BlAaaaAaAaaAAAAaAAaH\"" <<endl;
@@ -58,7 +60,7 @@ bool hungryGhost(bool has_item)
     cout << "step closer to it to see it is a wolf-like looking ghost scavenging the " <<endl;
     cout << "small corner it seems to guard. " << endl <<endl;
 
-    if (has_item)
+    if (item > 0)
     {
         cout << "It doesn't seem like the creature has found anything to eat. Maybe you " << endl;
         cout << "could give it something to snack on." <<endl << endl;
@@ -72,16 +74,33 @@ bool hungryGhost(bool has_item)
 
         if (choice == 'y')
         {
+            cout << "You reach out your hand holding some of the candy you had found on the floor" <<endl;
+            cout << "earlier. The creature darts it's eyes towards you and steps closer to inspect your offering." <<endl <<endl;
+
+            cout << "It sniffs your hand and gently takes the candy out of your hand, slowly chewing." <<endl;
+            cout << "The creatures fearful and tense nature disappears almost instantly and begins wagging it's tail." <<endl;
+            cout << "It starts trotting around you excitedly and rubs against your leg in gratitude. After a moment" <<endl;
+            cout << "of thanks the dog-ghost trots off into the dark and returns a moment later with 2 ghost remnants" <<endl; 
+            cout << "it likely tried to eat earlier becuase it was covered in ghost dog slobber." <<endl <<endl;
+
+            cout << "You got 2 ghost remnants!" <<endl <<endl;
             return true;
         }
 
         if (choice == 'n')
         {
             cout << "You back away from the rabid ghost. It gives you no attention as it " <<endl;
-            cout << "continues searching for a meal." <<endl;
+            cout << "continues searching for a meal." <<endl <<endl;
             return false;
         }
     
+    }
+
+    if (item == 0)
+    {
+        cout << "The creature seems hungry. It would proably appreciate some food." <<endl <<endl;
+
+        return false;
     }
 
 }
