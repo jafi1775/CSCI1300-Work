@@ -1024,7 +1024,7 @@ void play(Time game_time)
             winner << "You did not find the flashlight." << endl <<endl;
         }
 
-        winner << "Secret Message : Shivering Spines" <<endl;
+        winner << "Secret Message : Shivering-Spines" <<endl;
     }
 
 

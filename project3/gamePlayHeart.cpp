@@ -708,10 +708,10 @@ void play(Time game_time)
                     cout <<"What message would you like to type?" <<endl <<endl;
 
                     string message;
-                    cin >>message;
+                    getline(cin, message);
                     cout <<endl; // formatting space
 
-                    if (message == "Shivering-Spines")
+                    if (message == "Shivering Spines")
                     {
                         cout << "Once you finish typing the last \"s\" onto the page the type writer sends a shock to your" <<endl;
                         cout << "fingertips. And after a moment, the inside of the rickety house starts to illuminate," <<endl;
@@ -1018,7 +1018,7 @@ void play(Time game_time)
             winner << "You did not find the flashlight." << endl <<endl;
         }
 
-        winner << "Secret Message : Shivering Spines" <<endl;
+        winner << "Secret Message : Shivering-Spines" <<endl;
     }
 
 
